@@ -9,6 +9,9 @@ import { MatTableModule } from '@angular/material/table'
 import { MatSortModule } from '@angular/material/sort'
 import { MatInputModule } from '@angular/material/input'
 
+import { MessagesService } from './messages.service'
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,8 +24,9 @@ import { MatInputModule } from '@angular/material/input'
     MatTableModule,
     MatSortModule,
     MatInputModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ MessagesService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

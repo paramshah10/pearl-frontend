@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { MessagesService } from './messages.service'
 
 export interface UserData {
   id: string;
@@ -35,7 +36,9 @@ export class AppComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() {
+  public messages$ = [];
+
+  constructor(private messagesService: MessagesService) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
@@ -46,6 +49,19 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.messagesService.fetchMessages()
+        .subscribe(data => {
+          this.messages$ = data.seekers[0].messages
+          this.filterMessages()
+        })
+    
+    console.log("messages = ", this.messages$)
+  }
+
+  filterMessages() {
+    this.messages$.filter((element) => {
+      return element.direction == 0
+    })
   }
 
   applyFilter(event: Event) {
