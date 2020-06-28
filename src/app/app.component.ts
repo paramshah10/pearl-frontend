@@ -48,6 +48,13 @@ export class AppComponent implements OnInit {
     this.messages$ = this.messages$.filter((element) => {
       return element.direction == 0
     })
+    this.fixDate()
+  }
+
+  fixDate() {
+    this.messages$.forEach((_, index) => {
+      this.messages$[index].dateCompleted = this.messages$[index].dateCompleted.slice(0, 10) + ', ' + this.messages$[index].dateCompleted.slice(11, 19)
+    })
   }
 
   applyFilter(event: Event) {
