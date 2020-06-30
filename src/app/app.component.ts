@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   getAllMessages() {
     this.seekers$.forEach((seeker) => {
       seeker.messages.forEach((message) => {
+        message.from = seeker.firstName + ' ' + seeker.lastName
         this.messages$.push(message)
       })
     })
